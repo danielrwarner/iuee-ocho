@@ -17,7 +17,7 @@ Tools of the Trade
 Group Members
 -------------
 * Carlos Contreras (@)
-* Xavier Lamphere (@)
+* Xavier Lamphere ([@Lamphobic] (http://github.com/lamphobic))
 * Anh Nguyen (@)
 * Siddharth Sridharan ([@s1dd](http://github.com/s1dd))
 * Daniel Warner (@)
