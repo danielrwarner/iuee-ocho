@@ -18,7 +18,7 @@ Group Members
 -------------
 * Carlos Contreras ([@hwirol] (http://github.com/hwirol)
 * Xavier Lamphere ([@Lamphobic] (http://github.com/lamphobic))
-* Anh Nguyen ([@anguyen93] (https://github.com/anguyen93))
+* Anh Nguyen ([@anguyen93](https://github.com/anguyen93))
 * Siddharth Sridharan ([@s1dd](http://github.com/s1dd))
 * Daniel Warner (@)
 * Osean Vang ([@oseanvang] (http://github.com/oseanvang))
