@@ -21,5 +21,5 @@ Group Members
 * Anh Nguyen (@)
 * Siddharth Sridharan ([@s1dd](http://github.com/s1dd))
 * Daniel Warner (@)
-* Osean Vang (@)
+* Osean Vang ([@oseanvang] (http://github.com/oseanvang))
 
