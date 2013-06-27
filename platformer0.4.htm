@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			Videogame by Ocho
+		</title>
+	</head>
+	<body>
+		<canvas id="bg" width="960" height="640" style="border: solid 2px black; position:absolute; z-index:0;">
+		</canvas>
+		<canvas id="fg" width="960" height="640" style="border: solid 2px black; position:absolute; z-index:1;">
+		</canvas>
+		<script>
+			var bg = document.getElementById('bg');
+			var ctxbg = bg.getContext('2d');
+			var fg = document.getElementById('fg')
+			var ctxfg = fg.getContext('2d')
+			var tileset = new Image();
+			var xvalue;
+			var yvalue;
+
+			tileset.src = 'tileset.png';
+			
+			tileset.onload = function() {
+				for (var row = 0; row < 20; row++){
+					yvalue = (row * 32);
+					for (var column = 0; column < 30; column++) {
+						xvalue = (column * 32);
+						ctxbg.drawImage(tileset, sx=224, sy=0, sWidth=32, sHeight=32, dx=xvalue, dy=yvalue, dWidth=32, dHeight=32);
+					};
+				};
+
+				for (var lines = 0; lines < 30; lines++) {
+				xvalue = (lines * 32);
+				
+				ctxfg.drawImage(tileset, sx=0, sy=160, sWidth=32, sHeight=32, dx=xvalue, dy=192, dWidth=32, dHeight=32);
+				ctxfg.drawImage(tileset, sx=0, sy=160, sWidth=32, sHeight=32, dx=xvalue, dy=224, dWidth=32, dHeight=32);
+				};
+			};
+		</script>
+	</body>
+</html>
