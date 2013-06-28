@@ -32,7 +32,92 @@
 				this.dw = this.sw;
 				this.dh = this.sh;
 			};
+			Tile.prototype.draw = function() {
 
+			}
+
+
+			function Player() {
+				this.x = this.y = 0;
+				this.width = this.height = 100;
+				this.model;
+				this.mass = 1;
+				this.accel = 9.8;
+			}
+
+			Player.prototype.spawn = function() {
+				fg.width = fg.width;
+				myImage = new Image();
+				myImage.src = 'ham.png';
+				var self = this;
+				myImage.onload = function () {
+					console.log("this.x: " + this.x + ", this.y: " + this.y);
+					ctxfg.drawImage(myImage, self.x, self.y);
+				}
+
+			}
+			var dirInterval;
+
+			Player.prototype.initControls = function() {
+				var self = this;
+				window.onkeyup = function ( e ) {
+					if ( e.which == 37 || e.which == 38 || e.which == 39 ||  e.which == 40 ) {
+						e.preventDefault();
+						clearInterval(dirInterval);
+						dirInterval = null;
+						console.log("keyup");
+					}
+				}
+				window.onkeydown = function( e ) {
+					if ( e.which == 37 || e.which == 38 || e.which == 39 ||  e.which == 40 )
+						e.preventDefault();
+					console.log("key: " + e.which);
+						fg.width = fg.width;
+						var newVal;
+						switch ( e.which ) {
+							case 37:
+								if ( !dirInterval ) {
+									console.log("dirInterval: " + dirInterval);
+									dirInterval = setInterval(function() {
+										newVal = self.x - 5;
+										if (newVal <= fg.width - self.width)
+											self.x = newVal;
+										console.log("keydown");
+
+									}, 1000 / 60 );
+								}
+								break;
+							case 38:
+								newVal = self.y - 20;
+								if (newVal >= 0)
+									self.y -= 20;
+								break;
+							case 39:
+								if ( !dirInterval ) {
+									dirInterval = setInterval(function() {
+										newVal = self.x + 5;
+										if (newVal >= 0)
+											self.x = newVal;
+										console.log("keydown");
+
+									}, 1000 / 60 );
+								}
+								break;
+							case 40:
+								newVal = self.y + 20;
+								if (newVal <= fg.height - self.height)
+									self.y += 20;
+								break;
+						}
+						console.log( self.x + " " + self.y);
+						myImage2 = new Image();
+						myImage2.src = 'ham.png';
+						myImage2.onload = function () {
+							ctxfg.drawImage(myImage2, self.x, self.y);
+						}
+
+				}
+			}
 			var counter = 0;
 
 			var t = new Array(88);
@@ -45,8 +130,26 @@
 
 
 			tileset.src = 'tileset.png';
-			
+			var gravity;
 			tileset.onload = function() {
+				var p1 = new Player();
+				var y, t = 0;
+				p1.spawn();
+				gravity = setInterval(function () {
+
+					y = 10 * p1.accel * t * t;
+					t += 1/60;
+					p1.y = y;
+					p1.spawn();
+					// console.log("p1.y: " + p1.y);
+					// console.log("fg.height: " + fg.height);
+					if ( p1.y >= fg.height - p1.height ) {
+						console.log('hihi');
+						p1.y = fg.height - p1.height;
+					}
+				}, 1000 / 60 );
+
+				p1.initControls();
 				for (var row = 0; row < 20; row++){
 					yvalue = (row * 32);
 					for (var column = 0; column < 30; column++) {
