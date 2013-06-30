@@ -6,9 +6,11 @@
 		</title>
 	</head>
 	<body>
-		<canvas id="bg" width="960" height="640" style="border: solid 2px black; position:absolute; z-index:0;">
+		<canvas id="bg" width="480" height="320" style="border: solid 2px black; position:absolute; z-index:0;">
 		</canvas>
-		<canvas id="fg" width="960" height="640" style="border: solid 2px black; position:absolute; z-index:1;">
+		<canvas id="fg" width="1440" height="320" style="border: solid 2px black; position:absolute; z-index:1;">
+		</canvas>
+		<canvas id="sg" width="480" height="320" style="border: solid 2px black; position:absolute; z-index:2;">
 		</canvas>
 		<script>
 
@@ -17,14 +19,14 @@
 			var ctxbg = bg.getContext('2d');
 			var fg = document.getElementById('fg')
 			var ctxfg = fg.getContext('2d')
+			var sg = document.getElementById('sg')
+			var ctxsg = sg.getContext('2d')
 			var tileset = new Image();
-			var xvalue;
-			var yvalue;
 			var imgLoaded = false;
 			var keys = new Array(250);
-			var tiles = new Array(600);
+			var tiles = new Array(45);
 			for ( var i = 0; i < tiles.length; i++ ) {
-				tiles[i] = new Array(20);
+				tiles[i] = new Array(10);
 			}
 
 
@@ -39,6 +41,97 @@
 			};
 			Tile.prototype.draw = function() { }
 
+			var t0_0 = new Tile(0, 0)
+			var t0_1 = new Tile(0, 32)
+			var t0_2 = new Tile(0, 64)
+			var t0_3 = new Tile(0, 96)
+			var t0_4 = new Tile(0, 128)
+			var t0_5 = new Tile(0, 160)
+			var t0_6 = new Tile(0, 192)
+			var t0_7 = new Tile(0, 224)
+			var t0_8 = new Tile(0, 256)
+			var t0_9 = new Tile(0, 288)
+			var t0_10 = new Tile(0, 320)
+			var t1_0 = new Tile(32, 0)
+			var t1_1 = new Tile(32, 32)
+			var t1_2 = new Tile(32, 64)
+			var t1_3 = new Tile(32, 96)
+			var t1_4 = new Tile(32, 128)
+			var t1_5 = new Tile(32, 160)
+			var t1_6 = new Tile(32, 192)
+			var t1_7 = new Tile(32, 224)
+			var t1_8 = new Tile(32, 256)
+			var t1_9 = new Tile(32, 288)
+			var t1_10 = new Tile(32, 320)
+			var t2_0 = new Tile(64, 0)
+			var t2_1 = new Tile(64, 32)
+			var t2_2 = new Tile(64, 64)
+			var t2_3 = new Tile(64, 96)
+			var t2_4 = new Tile(64, 128)
+			var t2_5 = new Tile(64, 160)
+			var t2_6 = new Tile(64, 192)
+			var t2_7 = new Tile(64, 224)
+			var t2_8 = new Tile(64, 256)
+			var t2_9 = new Tile(64, 288)
+			var t2_10 = new Tile(64, 320)
+			var t3_0 = new Tile(96, 0)
+			var t3_1 = new Tile(96, 32)
+			var t3_2 = new Tile(96, 64)
+			var t3_3 = new Tile(96, 96)
+			var t3_4 = new Tile(96, 128)
+			var t3_5 = new Tile(96, 160)
+			var t3_6 = new Tile(96, 192)
+			var t3_7 = new Tile(96, 224)
+			var t3_8 = new Tile(96, 256)
+			var t3_9 = new Tile(96, 288)
+			var t3_10 = new Tile(96, 320)
+			var t4_0 = new Tile(128, 0)
+			var t4_1 = new Tile(128, 32)
+			var t4_2 = new Tile(128, 64)
+			var t4_3 = new Tile(128, 96)
+			var t4_4 = new Tile(128, 128)
+			var t4_5 = new Tile(128, 160)
+			var t4_6 = new Tile(128, 192)
+			var t4_7 = new Tile(128, 224)
+			var t4_8 = new Tile(128, 256)
+			var t4_9 = new Tile(128, 288)
+			var t4_10 = new Tile(128, 320)
+			var t5_0 = new Tile(160, 0)
+			var t5_1 = new Tile(160, 32)
+			var t5_2 = new Tile(160, 64)
+			var t5_3 = new Tile(160, 96)
+			var t5_4 = new Tile(160, 128)
+			var t5_5 = new Tile(160, 160)
+			var t5_6 = new Tile(160, 192)
+			var t5_7 = new Tile(160, 224)
+			var t5_8 = new Tile(160, 256)
+			var t5_9 = new Tile(160, 288)
+			var t5_10 = new Tile(160, 320)
+			var t6_0 = new Tile(192, 0)
+			var t6_1 = new Tile(192, 32)
+			var t6_2 = new Tile(192, 64)
+			var t6_3 = new Tile(192, 96)
+			var t6_4 = new Tile(192, 128)
+			var t6_5 = new Tile(192, 160)
+			var t6_6 = new Tile(192, 192)
+			var t6_7 = new Tile(192, 224)
+			var t6_8 = new Tile(192, 2256)
+			var t6_9 = new Tile(192, 288)
+			var t6_10 = new Tile(192, 320)
+			var t7_0 = new Tile(224, 0)
+			var t7_1 = new Tile(224, 32)
+			var t7_2 = new Tile(224, 64)
+			var t7_3 = new Tile(224, 96)
+			var t7_4 = new Tile(224, 128)
+			var t7_5 = new Tile(224, 160)
+			var t7_6 = new Tile(224, 192)
+			var t7_7 = new Tile(224, 224)
+			var t7_8 = new Tile(224, 256)
+			var t7_9 = new Tile(224, 288)
+			var t7_10 = new Tile(224, 320)
+
+
+
 
 			// Player Prototype
 			function Player() {
@@ -49,7 +142,7 @@
 				this.frictionX = 0.88;
 				this.frictionY = 0.88;
 				this.model = new Image();
-				this.model.src = 'ham.png';
+				this.model.src = 'minion1.png';
 				this.model.onload = function() {
 					imgLoaded = true;
 				}
@@ -59,8 +152,8 @@
 			}
 
 			Player.prototype.draw = function() {
-				fg.width = fg.width;
-				if (imgLoaded) ctxfg.drawImage(this.model, this.x, this.y);
+				sg.width = sg.width;
+				if (imgLoaded) ctxsg.drawImage(this.model, this.x, this.y);
 
 			}
 			var self;
@@ -110,8 +203,8 @@
 			    	this.velY = this.velY + 9.8 * t;
 			    }
 			    this.y += this.velY;
-			    if ( this.y >= fg.height - this.height ) {
-			    	this.y = fg.height - this.height;
+			    if ( this.y >= sg.height - this.height ) {
+			    	this.y = sg.height - this.height;
 			    	this.jumping = false;
 			    }
 			}
@@ -122,6 +215,213 @@
 				console.log('jumping: ' + p1.jumping);
 			}
 			setInterval(gameLoop, 1000 / 60)
+
+			tileset.src = 'tileset.png'
+
+			tileset.onload = function() {
+				//col 1
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=0, dy=32, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=0, dy=64, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=0, dy=96, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=0, dy=128, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=0, dy=160, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=0, dy=192, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=0, dy=224, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=0, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=0, dy=288, t0_5.sw, t0_5.sh);
+				//col 2
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=32, dy=32, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=32, dy=64, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=32, dy=96, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=32, dy=128, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=32, dy=160, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=32, dy=192, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=32, dy=224, t0_5.sw, t0_5.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=32, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=32, dy=288, t0_5.sw, t0_5.sh);
+				//col 3
+				ctxfg.drawImage(tileset, t1_3.sx, t1_3.sy, t1_3.sw, t1_3.sh, dx=64, dy=32, t1_3.sw, t1_3.sh);
+				ctxfg.drawImage(tileset, t2_0.sx, t2_0.sy, t2_0.sw, t2_0.sh, dx=64, dy=64, t2_0.sw, t2_0.sh);
+				ctxfg.drawImage(tileset, t2_0.sx, t2_0.sy, t2_0.sw, t2_0.sh, dx=64, dy=96, t2_0.sw, t2_0.sh);
+				ctxfg.drawImage(tileset, t2_0.sx, t2_0.sy, t2_0.sw, t2_0.sh, dx=64, dy=128, t2_0.sw, t2_0.sh);
+				ctxfg.drawImage(tileset, t2_0.sx, t2_0.sy, t2_0.sw, t2_0.sh, dx=64, dy=160, t2_0.sw, t2_0.sh);
+				ctxfg.drawImage(tileset, t2_0.sx, t2_0.sy, t2_0.sw, t2_0.sh, dx=64, dy=192, t2_0.sw, t2_0.sh);
+				ctxfg.drawImage(tileset, t2_0.sx, t2_0.sy, t2_0.sw, t2_0.sh, dx=64, dy=224, t2_0.sw, t2_0.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=64, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=64, dy=288, t0_5.sw, t0_5.sh);
+				//col 4
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=96, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=96, dy=288, t0_5.sw, t0_5.sh);
+				//col 5
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=128, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=128, dy=288, t0_5.sw, t0_5.sh);
+				//col 6
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=160, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=160, dy=288, t0_5.sw, t0_5.sh);
+				//col 7
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=192, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=192, dy=288, t0_5.sw, t0_5.sh);
+				//col 8
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=224, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=224, dy=288, t0_5.sw, t0_5.sh);
+				//col 9
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=256, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=256, dy=288, t0_5.sw, t0_5.sh);
+				//col 10
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=288, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=288, dy=288, t0_5.sw, t0_5.sh);
+				//col 11
+				ctxfg.drawImage(tileset, t0_2.sx, t0_2.sy, t0_2.sw, t0_2.sh, dx=320, dy=192, t0_2.sw, t0_2.sh);
+				ctxfg.drawImage(tileset, t1_1.sx, t1_1.sy, t1_1.sw, t1_1.sh, dx=320, dy=224, t1_1.sw, t1_1.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=320, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=320, dy=288, t0_5.sw, t0_5.sh);
+				//col 12
+				ctxfg.drawImage(tileset, t1_2.sx, t1_2.sy, t1_2.sw, t1_2.sh, dx=352, dy=192, t1_2.sw, t1_2.sh);
+				ctxfg.drawImage(tileset, t2_1.sx, t2_1.sy, t2_1.sw, t2_1.sh, dx=352, dy=224, t2_1.sw, t2_1.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=352, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=352, dy=288, t0_5.sw, t0_5.sh);
+				//col 13
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=384, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=384, dy=288, t0_5.sw, t0_5.sh);
+				//col 14
+				ctxfg.drawImage(tileset, t2_5.sx, t2_5.sy, t2_5.sw, t2_5.sh, dx=416, dy=128, t2_5.sw, t2_5.sh);
+				ctxfg.drawImage(tileset, t2_7.sx, t2_7.sy, t2_7.sw, t2_7.sh, dx=416, dy=160, t2_7.sw, t2_7.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=416, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=416, dy=288, t0_5.sw, t0_5.sh);
+				//col 15
+				ctxfg.drawImage(tileset, t7_9.sx, t7_9.sy, t7_9.sw, t7_9.sh, dx=448, dy=32, t7_9.sw, t7_9.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=448, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=448, dy=288, t0_5.sw, t0_5.sh);
+				//col 16
+				ctxfg.drawImage(tileset, t7_10.sx, t7_10.sy, t7_10.sw, t7_10.sh, dx=480, dy=96, t7_10.sw, t7_10.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=480, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=480, dy=288, t0_5.sw, t0_5.sh);
+				//col 17
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=512, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=512, dy=288, t0_5.sw, t0_5.sh);
+				//col 18
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=544, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=544, dy=288, t0_5.sw, t0_5.sh);
+				//col 19
+				ctxfg.drawImage(tileset, t3_4.sx, t3_4.sy, t3_4.sw, t3_4.sh, dx=576, dy=32, t3_4.sw, t3_4.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=576, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=576, dy=288, t0_5.sw, t0_5.sh);
+				//col 20
+				ctxfg.drawImage(tileset, t2_2.sx, t2_2.sy, t2_2.sw, t2_2.sh, dx=608, dy=32, t2_2.sw, t2_2.sh);
+				ctxfg.drawImage(tileset, t2_3.sx, t2_3.sy, t2_3.sw, t2_3.sh, dx=608, dy=64, t2_3.sw, t2_3.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=608, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=608, dy=288, t0_5.sw, t0_5.sh);
+				//col 21
+				ctxfg.drawImage(tileset, t3_2.sx, t3_2.sy, t3_2.sw, t3_2.sh, dx=640, dy=32, t3_2.sw, t3_2.sh);
+				ctxfg.drawImage(tileset, t3_3.sx, t3_3.sy, t3_3.sw, t3_3.sh, dx=640, dy=64, t3_3.sw, t3_3.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=640, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=640, dy=288, t0_5.sw, t0_5.sh);
+				//col 22
+				ctxfg.drawImage(tileset, t4_4.sx, t4_4.sy, t4_4.sw, t4_4.sh, dx=672, dy=32, t4_4.sw, t4_4.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=672, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=672, dy=288, t0_5.sw, t0_5.sh);
+				//col 23
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=704, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=704, dy=288, t0_5.sw, t0_5.sh);
+				//col 24
+				ctxfg.drawImage(tileset, t7_10.sx, t7_10.sy, t7_10.sw, t7_10.sh, dx=736, dy=64, t7_10.sw, t7_10.sh);
+				ctxfg.drawImage(tileset, t0_3.sx, t0_3.sy, t0_3.sw, t0_3.sh, dx=736, dy=192, t0_3.sw, t0_3.sh);
+				ctxfg.drawImage(tileset, t1_0.sx, t1_0.sy, t1_0.sw, t1_0.sh, dx=736, dy=224, t1_0.sw, t1_0.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=736, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=736, dy=288, t0_5.sw, t0_5.sh);
+				//col 25
+				ctxfg.drawImage(tileset, t1_3.sx, t1_3.sy, t1_3.sw, t1_3.sh, dx=768, dy=192, t1_3.sw, t1_3.sh);
+				ctxfg.drawImage(tileset, t2_0.sx, t2_0.sy, t2_0.sw, t2_0.sh, dx=768, dy=224, t2_0.sw, t2_0.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=768, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=768, dy=288, t0_5.sw, t0_5.sh);
+				//col 26
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=800, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=800, dy=288, t0_5.sw, t0_5.sh);
+				//col 27
+				ctxfg.drawImage(tileset, t7_10.sx, t7_10.sy, t7_10.sw, t7_10.sh, dx=832, dy=96, t7_10.sw, t7_10.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=832, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=832, dy=288, t0_5.sw, t0_5.sh);
+				//col 28
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=864, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=864, dy=288, t0_5.sw, t0_5.sh);
+				//col 29
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=896, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=896, dy=288, t0_5.sw, t0_5.sh);
+				//col 30
+				ctxfg.drawImage(tileset, t7_10.sx, t7_10.sy, t7_10.sw, t7_10.sh, dx=928, dy=96, t7_10.sw, t7_10.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=928, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=928, dy=288, t0_5.sw, t0_5.sh);
+				//col 31
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=960, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=960, dy=288, t0_5.sw, t0_5.sh);
+				//col 32
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=992, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=992, dy=288, t0_5.sw, t0_5.sh);
+				//col 33
+				ctxfg.drawImage(tileset, t7_10.sx, t7_10.sy, t7_10.sw, t7_10.sh, dx=1024, dy=96, t7_10.sw, t7_10.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=1024, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=1024, dy=288, t0_5.sw, t0_5.sh);
+				//col 34
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=1056, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=1056, dy=288, t0_5.sw, t0_5.sh);
+				//col 35
+				ctxfg.drawImage(tileset, t3_4.sx, t3_4.sy, t3_4.sw, t3_4.sh, dx=1088, dy=224, t3_4.sw, t3_4.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=1088, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=1088, dy=288, t0_5.sw, t0_5.sh);
+				//col 36
+				ctxfg.drawImage(tileset, t4_4.sx, t4_4.sy, t4_4.sw, t4_4.sh, dx=1120, dy=224, t4_4.sw, t4_4.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=1120, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=1120, dy=288, t0_5.sw, t0_5.sh);
+				//col 37
+				ctxfg.drawImage(tileset, t1_4.sx, t1_4.sy, t1_4.sw, t1_4.sh, dx=1152, dy=64, t1_4.sw, t1_4.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=1152, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=1152, dy=288, t0_5.sw, t0_5.sh);
+				//col 38
+				ctxfg.drawImage(tileset, t0_0.sx, t0_0.sy, t0_0.sw, t0_0.sh, dx=1184, dy=64, t0_0.sw, t0_0.sh);
+				ctxfg.drawImage(tileset, t1_5.sx, t1_5.sy, t1_5.sw, t1_5.sh, dx=1184, dy=160, t1_5.sw, t1_5.sh);
+				ctxfg.drawImage(tileset, t1_6.sx, t1_6.sy, t1_6.sw, t1_6.sh, dx=1184, dy=192, t1_6.sw, t1_6.sh);
+				ctxfg.drawImage(tileset, t1_6.sx, t1_6.sy, t1_6.sw, t1_6.sh, dx=1184, dy=224, t1_6.sw, t1_6.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=1184, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=1184, dy=288, t0_5.sw, t0_5.sh);
+				//col 39
+				ctxfg.drawImage(tileset, t0_0.sx, t0_0.sy, t0_0.sw, t0_0.sh, dx=1216, dy=64, t0_0.sw, t0_0.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=1216, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=1216, dy=288, t0_5.sw, t0_5.sh);
+				//col 40
+				ctxfg.drawImage(tileset, t0_0.sx, t0_0.sy, t0_0.sw, t0_0.sh, dx=1248, dy=64, t0_0.sw, t0_0.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=1248, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=1248, dy=288, t0_5.sw, t0_5.sh);
+				//col 41
+				ctxfg.drawImage(tileset, t0_0.sx, t0_0.sy, t0_0.sw, t0_0.sh, dx=1280, dy=64, t0_0.sw, t0_0.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=1280, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=1280, dy=288, t0_5.sw, t0_5.sh);
+				//col 42
+				ctxfg.drawImage(tileset, t2_4.sx, t2_4.sy, t2_4.sw, t2_4.sh, dx=1312, dy=64, t2_4.sw, t2_4.sh);
+				ctxfg.drawImage(tileset, t0_4.sx, t0_4.sy, t0_4.sw, t0_4.sh, dx=1312, dy=256, t0_4.sw, t0_4.sh);
+				ctxfg.drawImage(tileset, t0_5.sx, t0_5.sy, t0_5.sw, t0_5.sh, dx=1312, dy=288, t0_5.sw, t0_5.sh);
+				//col 43
+				ctxfg.drawImage(tileset, t1_3.sx, t1_3.sy, t1_3.sw, t1_3.sh, dx=1344, dy=256, t1_3.sw, t1_3.sh);
+				ctxfg.drawImage(tileset, t2_0.sx, t2_0.sy, t2_0.sw, t2_0.sh, dx=1344, dy=288, t2_0.sw, t2_0.sh);
+				//col 44
+				ctxfg.drawImage(tileset, t6_4.sx, t6_4.sy, t6_4.sw, t6_4.sh, dx=1376, dy=256, t6_4.sw, t6_4.sh);
+				ctxfg.drawImage(tileset, t6_5.sx, t6_5.sy, t6_5.sw, t6_5.sh, dx=1376, dy=288, t6_5.sw, t6_5.sh);
+				//col 45
+				ctxfg.drawImage(tileset, t7_4.sx, t7_4.sy, t7_4.sw, t7_4.sh, dx=1408, dy=256, t7_4.sw, t7_4.sh);
+				ctxfg.drawImage(tileset, t7_5.sx, t7_5.sy, t7_5.sw, t7_5.sh, dx=1408, dy=288, t7_5.sw, t7_5.sh);
+			};
+
+			var xvalue;
+			var yvalue;
+
+			//tileset.onload = function() {
+				//for (var row = 0; row < 10; row++){
+					//yvalue = (row * 32);
+					//for (var column = 0; column < 15; column++) {
+						//xvalue = (column * 32);
+						//ctxbg.drawImage(tileset, sx=224, sy=0, sWidth=32, sHeight=32, dx=xvalue, dy=yvalue, dWidth=32, dHeight=32);
+					//};
+				//};
+			//};
 		</script>
 	</body>
 </html>
