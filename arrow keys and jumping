@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+		<title>OCHO</title>
+	</head>
+	
+	<body>
+		<canvas id = "myCanvas" width = 800 height = 480 style = "border: 1px solid black"></canvas>
+		
+		<script>
+		
+			var canvas = document.getElementById("myCanvas");
+			var context = canvas.getContext("2d");
+			var position= 5; //amount of pixel the character is moving
+			var isJumping  = true;
+			x = canvas.width / 2; //align to the center
+			y = canvas.height / 2; // same as above
+			document.addEventListener('keydown', press, true);
+			
+			var pokemon = new Image();
+			pokemon.src = 'peachuyoukai.gif';
+			pokemon.onload = function(){
+				context.drawImage(pokemon,x - 350, y + 100, 50, 50);
+			};
+			
+			function press(e){
+				//alert(e.keyCode);
+				var key = e.keyCode;
+				switch(key){
+					case 32:
+						jump();
+						break;
+					case 37:
+						x -= position;//Left
+						break;
+					case 38: 
+						y -= position;//Up
+						break;
+					case 39: 
+						x += position;//Right
+						break;
+					case 40: 
+						y += position;//Down
+						break;
+				};
+				move();
+			};
+			
+			function jump(){
+				var jumpint = setInterval(function() {
+					y -=5;
+					if(y <= 150){
+						isJumping == false;
+						clearInterval(jumpint);
+					};
+				}, 10);
+			};
+			
+			function move(){
+				context.clearRect(0,0,canvas.width,canvas.height);
+				context.drawImage(pokemon, x - 350, y + 100, 50, 50);
+			};
+			
+		</script>
+	</body>
+</html>
