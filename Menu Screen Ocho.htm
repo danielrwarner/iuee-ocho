@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Videogame by Ocho</title>
+</head>
+<body>
+
+<center>
+<div>
+<canvas id="bg" width="960" height="640" style="border: solid 2px black; z-index:1; position:absolute; left:100px;">
+</canvas>
+
+
+<script>
+	var bg = document.getElementById('bg')
+	var ctxbg = bg.getContext('2d')
+	var background = new Image();
+	
+	background.src = 'background.jpg';
+	
+	background.onload = function() {
+	ctxbg.drawImage(background, sx=300, sy=300, sWidth=960, sHeight=640, dx=0, dy=0, dWidth=960, dHeight=640);
+	ctxbg.font="20px cursive"
+	ctxbg.fillText ("Start Game",100,100);
+	};
+	
+	  //Event Listeners
+	  function clickHandler(e){
+		var x1 = 197;
+		var x2 = 314;
+		var y1 = 89;
+		var y2 = 112;
+		
+		if(e.offsetX > 100 && e.offsetX < 250 && e.offsetY > 89 && e.offsetY < 112){
+			
+			ctxbg.fillText("Hi", 100,100);
+			alert("we clicked it"); // We added this alert to make sure it worked. 
+			console.log(e);//We used this to get coordinates of the button. 
+	   }
+	 };
+        bg.addEventListener("mousedown", clickHandler, false);
+	
+
+	
+	
+	
+</script>
+
+</div>
+</center>
+</body>
+</html>
