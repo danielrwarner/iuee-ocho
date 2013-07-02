@@ -6,9 +6,9 @@
 		</title>
 	</head>
 	<body>
-		<canvas id="bg" width="960" height="640" style="border: solid 2px black; position:absolute; z-index:0;">
+		<canvas id="bg" width="1440" height="640" style="border: solid 2px black; position:absolute; z-index:0;">
 		</canvas>
-		<canvas id="fg" width="960" height="640" style="border: solid 2px black; position:absolute; z-index:1;">
+		<canvas id="fg" width="1440" height="640" style="border: solid 2px black; position:absolute; z-index:1;">
 		</canvas>
 		<script>
 
@@ -22,9 +22,25 @@
 			var yvalue;
 			var imgLoaded = false;
 			var keys = new Array(250);
-			var tiles = new Array(600);
+			var tileCatalog = new Array(8)
+			var tiles = new Array(45);
+
+			var collision = {
+				'north': false,
+				'south': false,
+				'west': false,
+				'east': false
+			};
+			for ( var i = 0; i < tileCatalog.length; i++ ) {
+				tileCatalog[i] = new Array(11);
+			}
+			for ( var i = 0; i <= 7; i++) {
+				for ( var j = 0; j <= 10; j++) {
+					tileCatalog[i][j] = new Tile(i * 32, j * 32);
+				}
+			}
 			for ( var i = 0; i < tiles.length; i++ ) {
-				tiles[i] = new Array(20);
+				tiles[i] = new Array(10);
 			}
 
 
@@ -37,36 +53,40 @@
 				this.dw = this.sw;
 				this.dh = this.sh;
 			};
-			Tile.prototype.draw = function() { }
+			Tile.prototype.draw = function() {
+
+			}
 
 
 			// Player Prototype
 			function Player() {
-				this.x = this.y = 400;
-				this.width = this.height = 100;
+				this.x = this.y = 200;
+				this.width = 62;
+				this.height = 72;
 				this.velY = this.velX = 0;
-				this.speed = 2;
-				this.frictionX = 0.88;
+				this.speed = 5;
+				this.frictionX = 0.98;
 				this.frictionY = 0.88;
 				this.model = new Image();
 				this.model.src = 'ham.png';
 				this.model.onload = function() {
 					imgLoaded = true;
 				}
-				this.jumping = false;
+				this.jumping = true;
 				this.mass = 1;
 				this.accel = 9.8 / 60;
 			}
-
 			Player.prototype.draw = function() {
 				fg.width = fg.width;
-				if (imgLoaded) ctxfg.drawImage(this.model, this.x, this.y);
-
+				if ( imgLoaded ) {
+					if ( this.velX >= 0 ) ctxfg.drawImage(this.model, this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
+					else if ( this.velX < 0 ) ctxfg.drawImage(this.model, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height);
+				}
 			}
 			var self;
 			var dirInterval;
 			document.body.addEventListener("keydown", function( e ) {
-				if (e.keyCode == 37 ||e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40)
+				if (e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40)
 					e.preventDefault();
 				console.log(e.keyCode);
 				keys[e.keyCode] = true;
@@ -74,6 +94,17 @@
 			document.body.addEventListener("keyup", function( e ) {
 				keys[e.keyCode] = false;
 			});
+
+
+			Player.prototype.getCollision = function() {
+			    // if ( this.x + this.width > 500 )
+			    // 	collision.east = true;
+			    // else
+			    // 	collision.east = false;
+			    // if ( this.y + this.height ==  )
+					// collision.
+			}
+
 			var t = 0;
 			Player.prototype.update = function() {
 				t += 1/60;
@@ -99,17 +130,30 @@
 			    }
 			    if (keys[37]) {
 			        if (this.velX > -this.speed) {
+			        	this.x--;
 			            this.velX--;
 			        }
 			    }
 
 			    this.velX *= this.frictionX;
-			    this.x += this.velX;
 			    this.velY *= this.frictionY;
 			    if ( this.jumping ) {
 			    	this.velY = this.velY + 9.8 * t;
 			    }
+			    
+			    this.getCollision();
+			    if ( collision.south )
+			    	this.velY = 0;
+			    else if ( collision.north )
+			    	this.velY = 0;
 			    this.y += this.velY;
+
+			    if ( collision.west )
+			    	this.velX = 0;
+			    else if ( collision.east )
+			    	this.velX = 0;
+			    this.x += this.velX;
+
 			    if ( this.y >= fg.height - this.height ) {
 			    	this.y = fg.height - this.height;
 			    	this.jumping = false;
@@ -119,9 +163,37 @@
 			function gameLoop() {
 				p1.draw();
 				p1.update();
-				console.log('jumping: ' + p1.jumping);
 			}
-			setInterval(gameLoop, 1000 / 60)
+			function parse(map) {
+				var cur = 1, tileNo = map.split(";"), i = 0, x = -1, y = -1;
+				while ( cur ) {
+					cur = tileNo[i];
+					if ( cur ) {
+						y = (y + 1) % 9;
+						if ( !y )
+							x = (x + 1) % 45;
+						// console.log("x: " + x + " y: " + y);
+						if ( cur != "E" ) { 
+							// console.log(tileCatalog[cur.split(",")[0]][cur.split(",")[1]]);
+							tiles[x][y] = tileCatalog[cur.split(",")[0]][cur.split(",")[1]];
+							// console.log(tiles[x][y]);
+							// console.log(x + " " + y);
+							ctxbg.drawImage(tileset, tiles[x][y].sx, tiles[x][y].sy, tiles[x][y].sw, tiles[x][y].sh, x * 32, y * 32 + fg.height - 288, tiles[x][y].sw, tiles[x][y].sh);
+						}
+						i++;
+						// console.log(cur);
+					}
+				}
+			}
+			setInterval(gameLoop, 1000 / 60);
+
+			tileset.src = 'tileset.png';
+
+			tileset.onload = function() {
+				var map = "0,4;0,5;0,5;0,5;0,5;0,5;0,5;0,4;0,5;0,4;0,5;0,5;0,5;0,5;0,5;0,5;0,4;0,5;1,3;2,0;2,0;2,0;2,0;2,0;2,0;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;0,2;1,1;0,4;0,5;E;E;E;E;E;1,2;2,1;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;2,5;2,7;E;E;0,4;0,5;7,9;E;E;E;E;E;E;0,4;0,5;E;E;7,10;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;3,4;E;E;E;E;E;E;0,4;0,5;2,2;2,3;E;E;E;E;E;0,4;0,5;3,2;3,3;E;E;E;E;E;0,4;0,5;4,4;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;7,10;E;E;E;0,3;1,0;0,4;0,5;E;E;E;E;E;1,3;2,0;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;7,10;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;7,10;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;7,10;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;3,4;0,4;0,5;E;E;E;E;E;E;4,4;0,4;0,5;E;1,4;E;E;E;E;E;0,4;0,5;E;0,0;E;E;1,5;1,6;1,6;0,4;0,5;E;0,0;E;E;E;E;E;0,4;0,5;E;0,0;E;E;E;E;E;0,4w;0,5;E;0,0;E;E;E;E;E;0,4;0,5;E;2,4;E;E;E;E;E;0,4;0,5;E;E;E;E;E;E;E;1,3;2,0;E;E;E;E;E;E;E;6,4;6,5;E;E;E;E;E;E;E;7,4;7,5";
+
+				parse(map);
+			}
 		</script>
 	</body>
 </html>
