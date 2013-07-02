@@ -6,9 +6,9 @@
 		</title>
 	</head>
 	<body>
-		<canvas id="bg" width="1440" height="640" style="border: solid 2px black; position:absolute; z-index:0;">
+		<canvas id="bg" width="1440" height="320" style="border: solid 2px black; position:absolute; z-index:0;">
 		</canvas>
-		<canvas id="fg" width="1440" height="640" style="border: solid 2px black; position:absolute; z-index:1;">
+		<canvas id="fg" width="1440" height="320" style="border: solid 2px black; position:absolute; z-index:1;">
 		</canvas>
 		<script>
 
@@ -52,6 +52,9 @@
 				this.sh = this.sw;
 				this.dw = this.sw;
 				this.dh = this.sh;
+				this.dx = this.dy;
+				this.x;
+				this.y;
 			};
 			Tile.prototype.draw = function() {
 
@@ -61,20 +64,20 @@
 			// Player Prototype
 			function Player() {
 				this.x = this.y = 200;
-				this.width = 62;
-				this.height = 72;
+				this.width = 32;
+				this.height = 32;
 				this.velY = this.velX = 0;
-				this.speed = 5;
-				this.frictionX = 0.98;
+				this.speed = 4;
+				this.frictionX = 0.88;
 				this.frictionY = 0.88;
 				this.model = new Image();
-				this.model.src = 'ham.png';
+				this.model.src = 'minion1.png';
 				this.model.onload = function() {
 					imgLoaded = true;
 				}
 				this.jumping = true;
 				this.mass = 1;
-				this.accel = 9.8 / 60;
+				this.accel = 9.8;
 			}
 			Player.prototype.draw = function() {
 				fg.width = fg.width;
@@ -95,24 +98,60 @@
 				keys[e.keyCode] = false;
 			});
 
+			Player.prototype.getTilePos = function(direction) {
+				var tilePoss = [];
+				var x = [], y = [];
+				if (direction === "south") {
+					x.push(this.x);
+					x.push(this.x + this.width);
+					y.push(this.y + this.height);
+					y.push(this.y + this.height);
+				}
+				tile1 = { x: 0, y: 0 };
+				tile2 = { x: 0, y: 0 };
 
+				tile1.x = Math.floor ( x[0] / 32 );
+				tile1.y = Math.floor ( y[0] / 32 );
+				tile2.x = Math.floor ( x[1] / 32 );
+				tile2.y = Math.floor ( y[1] / 32 );
+
+				tilePoss.push(tile1);
+				tilePoss.push(tile2);
+				return tilePoss;
+			}
 			Player.prototype.getCollision = function() {
+				collidingTiles = this.getTilePos("south");
 			    // if ( this.x + this.width > 500 )
 			    // 	collision.east = true;
 			    // else
-			    // 	collision.east = false;
-			    // if ( this.y + this.height ==  )
-					// collision.
+			    // 	collision.east = false
+			    for ( var i = 0; i <= 1; i++) {
+				    var south = tiles[collidingTiles[i].x][collidingTiles[i].y - 1]
+					if ( south ) {
+						// console.log( south.y );
+					    if ( south.y ) {
+							if ( this.y + this.height >= south.y) {
+								collision.south = true;
+								this.jumping = false;
+								console.log(south.y - this.height);
+								this.y = south.y - this.height;
+								// console.log("hihi");
+							}
+						}
+					}
+				}
 			}
 
 			var t = 0;
 			Player.prototype.update = function() {
 				t += 1/60;
+			    this.getCollision();
 			    if (keys[38]) {
 			        if (this.velY > -this.speed) {
 			            this.velY--;
 			        }
 			        if ( this.jumping == false ) {
+			        	collision.south = false;
 			        	t = 0;
 			        	this.velY = -20;
 			        	this.jumping = true;
@@ -138,10 +177,9 @@
 			    this.velX *= this.frictionX;
 			    this.velY *= this.frictionY;
 			    if ( this.jumping ) {
-			    	this.velY = this.velY + 9.8 * t;
+			    	this.velY = this.velY + this.accel * t;
 			    }
 			    
-			    this.getCollision();
 			    if ( collision.south )
 			    	this.velY = 0;
 			    else if ( collision.north )
@@ -153,11 +191,7 @@
 			    else if ( collision.east )
 			    	this.velX = 0;
 			    this.x += this.velX;
-
-			    if ( this.y >= fg.height - this.height ) {
-			    	this.y = fg.height - this.height;
-			    	this.jumping = false;
-			    }
+			    // console.log(this.jumping);
 			}
 			var p1 = new Player();
 			function gameLoop() {
@@ -176,9 +210,15 @@
 						if ( cur != "E" ) { 
 							// console.log(tileCatalog[cur.split(",")[0]][cur.split(",")[1]]);
 							tiles[x][y] = tileCatalog[cur.split(",")[0]][cur.split(",")[1]];
-							// console.log(tiles[x][y]);
-							// console.log(x + " " + y);
-							ctxbg.drawImage(tileset, tiles[x][y].sx, tiles[x][y].sy, tiles[x][y].sw, tiles[x][y].sh, x * 32, y * 32 + fg.height - 288, tiles[x][y].sw, tiles[x][y].sh);
+							if ( tiles[x][y] ) {
+								// console.log(tiles[x][y]);
+								// console.log(x + " " + y);
+
+								tiles[x][y].x = x * 32;
+								tiles[x][y].y = y * 32 + 32;
+								// console.log(tiles[x][y]);
+								ctxbg.drawImage(tileset, tiles[x][y].sx, tiles[x][y].sy, tiles[x][y].sw, tiles[x][y].sh, tiles[x][y].x, tiles[x][y].y, tiles[x][y].sw, tiles[x][y].sh);
+							}
 						}
 						i++;
 						// console.log(cur);
