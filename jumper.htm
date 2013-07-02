@@ -6,11 +6,6 @@
 		</title>
 	</head>
 	<body>
-		<audio  style="position: relative; bottom: 10px;" controls autoplay loop>
-	  	<source src="audio/bgmusic.mp3" type="audio/mp3">
-	 	Your browser does not support the audio element.
-		</audio>
-		<br>
 		<canvas id="bg" width="1440" height="640" style="border: solid 2px black; position:absolute; z-index:0;">
 		</canvas>
 		<canvas id="fg" width="1440" height="640" style="border: solid 2px black; position:absolute; z-index:1;">
@@ -120,9 +115,6 @@
 			        if ( this.jumping == false ) {
 			        	t = 0;
 			        	this.velY = -20;
-			        	var jumpSound = document.createElement('audio'); // creates a variable for the jump sound effect
-						jumpSound.setAttribute('src','audio/jump.wav');  // identifies the jump sound effect source
-						jumpSound.play(); 								 // plays the jump sound effect
 			        	this.jumping = true;
 			        }
 			    }
