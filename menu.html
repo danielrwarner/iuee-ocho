@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Videogame by Ocho</title>
+	</head>
+	<body>
+
+	<center>
+	<div>
+		<canvas id="bg" width="960" height="640" style="border: solid 2px black; z-index:1; position:absolute; left:100px;"></canvas>
+
+	<script>
+		var bg = document.getElementById('bg')
+		var ctxbg = bg.getContext('2d')
+		var background = new Image();
+
+		background.src = 'background.jpg';
+
+		background.onload = function() {
+			ctxbg.drawImage(background, sx=300, sy=300, sWidth=960, sHeight=640, dx=0, dy=0, dWidth=960, dHeight=640);
+			ctxbg.font="25px cursive";
+			ctxbg.fillText ("Start Game",100,100);
+		};
+
+		//Event Listeners
+		function clickHandler(e){
+			var strx1 = 197;//first start x coordinate
+			var strx2 = 314;//second start x coordinate
+			var stry1 = 89;//first start y coordinate
+			var stry2 = 112;//second start y coordinate
+			var backx1 = 446;//first back x coordinate
+			var backx2 = 675;//second back x coordinate
+			var backy1 = 81;//first back y coordinate
+			var backy2 = 110;//second back y coordinate
+			
+			console.log(e);// Get coordinates for start and back button.
+			if(e.offsetX > strx1 - 97 && e.offsetX < strx2 - 64 && e.offsetY > stry1 && e.offsetY < stry2){
+				alert("We clicked it!"); // We added this alert to make sure it worked.
+				ctxbg.clearRect(0, 0, bg.width, bg.height);// Clears canvas when pressing start.
+				//Switch screens
+				ctxbg.drawImage(background, sx=300, sy=300, sWidth=960, sHeight=640, dx=0, dy=0, dWidth=960, dHeight=640);
+				ctxbg.fillText("Back to Main Menu", 350,100);
+			}
+			
+			if(e.offsetX > backx1 - 97 && e.offsetX < backx2 - 64 && e.offsetY > backy1 && e.offsetY < backy2){
+				alert("We clicked it!"); // We added this alert to make sure it worked.
+				ctxbg.clearRect(0, 0, bg.width, bg.height);// Clears canvas when pressing start.
+				//Switch screens
+				ctxbg.drawImage(background, sx=300, sy=300, sWidth=960, sHeight=640, dx=0, dy=0, dWidth=960, dHeight=640);
+				ctxbg.fillText("Start Menu", 100,100);
+			}
+		};
+        bg.addEventListener("mousedown", clickHandler, false);
+
+	</script>
+
+	</div>
+	</center>
+	</body>
+</html>
