@@ -45,7 +45,7 @@
 
 
 			// Tile Prototype
-			function Tile(sx, sy){
+			function Tile(sx, sy, solid){
 				this.sx = sx;
 				this.sy = sy;
 				this.sw = 32;
@@ -55,6 +55,7 @@
 				this.dx = this.dy;
 				this.x;
 				this.y;
+				this.solid = ( solid != null) ? solid : true;
 			};
 			Tile.prototype.draw = function() {
 
@@ -123,21 +124,33 @@
 				return tilePoss;
 			}
 			Player.prototype.getCollision = function() {
-				collidingTiles = this.getTilePos("south");
-			    for ( var i = 0; i <= 1; i++) {
-				    var south = tiles[collidingTiles[i].x][collidingTiles[i].y - 1];
-
-					if ( south ) {
-						if ( this.y + this.height >= south.y) {
-							// console.log( south );
-							collision.south = true;
-							this.jumping = false;
-							// console.log(this.y);
-							this.y = south.y - 32;
-							// console.log(south.y);
+				var collidingTiles = this.getTilePos("south");
+				var north, west, east, south;
+				if ( this.x <= 1 )
+					this.x = 1;
+				else if ( this.x + this.width >= bg.width - 1 )
+					this.x = bg.width - 1 - this.width;
+				if ( tiles[collidingTiles[0].x][collidingTiles[0].y - 1] || tiles[collidingTiles[1].x][collidingTiles[1].y - 1] ) {
+					console.log(collidingTiles);
+				    for ( var i = 0; i <= 1; i++) {
+					    south = tiles[collidingTiles[i].x][collidingTiles[i].y - 1];
+						if ( south && tiles[collidingTiles[i].x][collidingTiles[i].y - 1].solid ) {
+							if ( this.y + this.height >= south.y) {
+								// console.log( south );
+								collision.south = true;
+								this.jumping = false;
+								// console.log(this.y);
+								this.y = south.y - 32;
+								// console.log(south.y);
+							}
 						}
 					}
 				}
+				else {
+					this.jumping = true;
+					collision.south = false;
+				}
+
 			}
 
 			var t = 0;
@@ -215,8 +228,42 @@
 							x = (x + 1) % 45;
 						// console.log("x: " + x + " y: " + y);
 						if ( cur != "E,0" ) { 
-							tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy);
-
+							//crappy switch stmt
+							switch ( cur ) {
+								case "2,8":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;
+								case "1,1":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;
+								case "2,0":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;
+								case "1,6":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;
+								case "2,6":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;
+								case "2,7":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;								
+								case "0,5":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;	
+								case "5,4":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;
+								case "4,8":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;
+								case "5,8":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;
+								default:
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy);
+									break;
+							}
 							if ( tiles[x][y] ) {
 								// console.log(tiles[x][y]);
 								// console.log(x + " " + y);
