@@ -6,10 +6,12 @@
 		</title>
 	</head>
 	<body>
+	<div id="viewport" style="overflow: hidden; width: 484px; height: 324px;display: block; position: absolute; left: 50%; margin-left: -242px; top: 50%; margin-top: -162px; -webkit-transform: scale(1.75)">
 		<canvas id="bg" width="1440" height="320" style="border: solid 2px black; position:absolute; z-index:0;">
 		</canvas>
 		<canvas id="fg" width="480" height="320" style="border: solid 2px black; position:absolute; z-index:1;">
 		</canvas>
+	</div>
 		<script>
 			var map = "0,4;0,5;0,5;0,5;0,5;0,5;0,5;0,4;0,5;0,4;0,5;0,5;0,5;0,5;0,5;0,5;0,4;0,5;1,3;2,0;2,0;2,0;2,0;2,0;2,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;5,8;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;5,8;0,2;1,1;0,4;0,5;E,0;E,0;E,0;E,0;E,0;1,2;2,1;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;2,5;2,7;E,0;E,0;0,4;0,5;7,9;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;7,10;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;3,4;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;2,2;2,3;E,0;E,0;E,0;E,0;E,0;0,4;0,5;3,2;3,3;E,0;E,0;E,0;E,0;E,0;0,4;0,5;4,4;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;2,8;7,10;E,0;E,0;E,0;0,3;1,0;0,4;0,5;E,0;E,0;E,0;E,0;4,8;1,3;2,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;2,8;7,10;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;5,4;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;2,8;7,10;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;2,8;7,10;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;3,4;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;4,4;0,4;0,5;E,0;1,4;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;0,0;E,0;E,0;1,5;1,6;1,6;0,4;0,5;E,0;0,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;4,8;0,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;0,0;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;2,4;E,0;E,0;E,0;E,0;E,0;0,4;0,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;1,3;2,0;E,0;E,0;E,0;E,0;E,0;E,0;E,0;6,4;6,5;E,0;E,0;E,0;E,0;E,0;E,0;E,0;7,4;7,5";
 			// Initialization
@@ -27,6 +29,7 @@
 			var tileCatalog = new Array(8)
 			var tiles = new Array(45);
 			var offset = 0;
+			var leftOffset = 200;
 			var collision = {
 				'north': false,
 				'south': false,
@@ -86,8 +89,8 @@
 			Player.prototype.draw = function() {
 				fg.width = fg.width;
 				if ( imgLoaded ) {
-					if ( this.velX >= 0 ) ctxfg.drawImage(this.model, this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
-					else if ( this.velX < 0 ) ctxfg.drawImage(this.model, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height);
+					if ( this.velX >= 0 ) ctxfg.drawImage(this.model, this.width, 0, this.width, this.height, this.x + offset, this.y, this.width, this.height);
+					else if ( this.velX < 0 ) ctxfg.drawImage(this.model, 0, 0, this.width, this.height, this.x + offset, this.y, this.width, this.height);
 				}
 			}
 			var self;
@@ -152,9 +155,16 @@
 					this.jumping = true;
 					collision.south = false;
 				}
-				if ( fg.width - this.x <= 50 ) {
-					offset = ( fg.width - this.x ) - 50;
-					parse(map);
+
+				if ( fg.width - this.x <= leftOffset ) {
+					if ( !( this.x >= ( bg.width - leftOffset ) ) )  {
+						offset = ( fg.width - this.x ) - leftOffset;
+						// console.log(offset);
+						fg.style.left = -offset + "px";
+						fg.style.marginLeft = offset + "px";
+						bg.style.marginLeft = offset + "px";
+						parse(map);
+					}
 				}
 
 			}
@@ -209,6 +219,7 @@
 			    	this.velX = 0;
 			    this.x += this.velX;
 			    // console.log(this.jumping);
+
 			}
 			var p1 = new Player();
 			function gameLoop() {
@@ -252,6 +263,18 @@
 								case "2,6":
 									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
 									break;
+								case "7,4":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;
+								case "7,5":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;
+								case "6,4":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;	
+								case "6,5":
+									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
+									break;		
 								case "2,7":
 									tiles[x][y] = new Tile(tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sx, tileCatalog[cur.split(",")[0]][cur.split(",")[1]].sy, false);
 									break;								
@@ -274,7 +297,7 @@
 							if ( tiles[x][y] ) {
 								// console.log(tiles[x][y]);
 								// console.log(x + " " + y);
-								tiles[x][y].x = x * 32 + offset;
+								tiles[x][y].x = x * 32;
 								tiles[x][y].y = y * 32 + 32;
 								ctxbg.drawImage(tileset, tiles[x][y].sx, tiles[x][y].sy, tiles[x][y].sw, tiles[x][y].sh, tiles[x][y].x, tiles[x][y].y, tiles[x][y].sw, tiles[x][y].sh);
 							}
@@ -289,8 +312,6 @@
 			tileset.src = 'tileset.png';
 
 			tileset.onload = function() {
-
-
 				parse(map);
 			}
 		</script>
